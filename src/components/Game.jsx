@@ -67,6 +67,7 @@ export function Game() {
   const lastMoveTime = useRef(0);
   const lastEnemyMoveTime = useRef(0);
   const lastBulletMoveTime = useRef(0);
+  const waveSpawningRef = useRef(false);
   
   // Input state
   const keysPressed = useRef(new Set());
@@ -119,6 +120,7 @@ export function Game() {
     lastMoveTime.current = 0;
     lastEnemyMoveTime.current = 0;
     lastBulletMoveTime.current = 0;
+    waveSpawningRef.current = false;
     currentDirection.current = DIRECTIONS.UP;
     keysPressed.current.clear();
   }, [spawnEnemies]);
@@ -386,13 +388,21 @@ export function Game() {
     }
     
     // Check if all enemies defeated - spawn new wave
-    if (enemies.length === 0 && gameState === GAME_STATES.PLAYING) {
-      setWave(w => {
-        const newWave = w + 1;
-        setScore(s => s + SCORES.WAVE_BONUS * newWave);
-        setEnemies(spawnEnemies(newWave));
-        return newWave;
-      });
+    const currentEnemiesCount = enemies.length;
+    if (currentEnemiesCount === 0 && gameState === GAME_STATES.PLAYING) {
+      // Use a flag to prevent multiple spawns
+      if (!waveSpawningRef.current) {
+        waveSpawningRef.current = true;
+        setWave(w => {
+          const newWave = w + 1;
+          setScore(s => s + SCORES.WAVE_BONUS * newWave);
+          setTimeout(() => {
+            setEnemies(spawnEnemies(newWave));
+            waveSpawningRef.current = false;
+          }, 1000);
+          return newWave;
+        });
+      }
     }
   }, [gameState, player, map, enemies, canMoveTo, processBullets, spawnEnemies]);
 
