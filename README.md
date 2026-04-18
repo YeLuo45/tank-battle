@@ -1,4 +1,4 @@
-# Tank Battle - Web + PWA Game
+# 坦克大作战 - Web + PWA 游戏
 
 A classic tank battle game built with React 18, Vite 5, and Canvas 2D.
 
