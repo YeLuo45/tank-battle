@@ -19,19 +19,19 @@ export default defineConfig({
         orientation: 'landscape',
         icons: [
           {
-            src: '/icons/icon-192.png',
+            src: '/tank-battle/icons/icon.svg',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/svg+xml'
           },
           {
-            src: '/icons/icon-512.png',
+            src: '/tank-battle/icons/icon.svg',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/svg+xml'
           },
           {
-            src: '/icons/icon-512.png',
+            src: '/tank-battle/icons/icon.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'maskable'
           }
         ]
